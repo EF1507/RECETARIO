@@ -1,4 +1,15 @@
+# .gitignore
+
+# Ignorar el entorno virtual de Python
 .venv/
+
+# Ignorar dependencias de Node.js
 recetario-react/node_modules/
+
+# Ignorar archivos de entorno (contraseñas)
 recetario-api/.env
 recetario-react/.env
+
+# Ignorar caché de Python
+__pycache__/
+*.pyc
