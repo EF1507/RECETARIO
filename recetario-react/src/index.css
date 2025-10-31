@@ -1,0 +1,129 @@
+/* src/index.css */
+body {
+  /* Imagen de fondo */
+  background-image: url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=1780');
+  
+  /* Ajustes del fondo */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* El fondo no se mueve con el scroll */
+  
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* El efecto "vidrio esmerilado" */
+.glass-container {
+  /* El desenfoque */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  
+  /* Color semitransparente */
+  background-color: rgba(255, 255, 255, 0.4); 
+  
+  /* Bordes */
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  /* Sombra */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  
+  padding: 2rem;
+  margin-top: 2rem;
+}
+/* --- NUEVO CSS para componentes internos --- */
+
+/* 1. Hacemos que todo el texto dentro del panel sea oscuro (para leerse bien) */
+.glass-container,
+.glass-container h1,
+.glass-container h2,
+.glass-container h3,
+.glass-container .form-label {
+  color: #000;
+}
+
+/* 2. Estilo "Glass" para los inputs del formulario */
+.glass-container .form-control {
+  background-color: rgba(255, 255, 255, 0.5); /* Blanco translúcido */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #000; /* Texto negro */
+}
+
+/* 3. Color del texto placeholder */
+.glass-container .form-control::placeholder {
+  color: #333; /* Un gris oscuro */
+}
+
+/* 4. Estilo "Glass" para la tabla */
+.glass-container .table {
+  background-color: transparent; /* Quitamos el fondo opaco de la tabla */
+  color: #000; /* Texto negro */
+}
+
+/* 5. Cabecero de la tabla (el que era .table-dark) */
+.glass-container .table-dark {
+  background-color: rgba(0, 0, 0, 0.3); /* Negro translúcido */
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff; /* Texto blanco en el cabecero */
+}
+
+/* 6. Filas "striped" (rayadas) de la tabla */
+.glass-container .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(0, 0, 0, 0.05); /* Gris muy sutil y translúcido */
+  color: #000;
+}/* --- CSS ADICIONAL para forzar el estilo "Glass" --- */
+
+/* 1. Estilo para la Navegación (Mis Recetas, etc.) */
+.glass-container .nav-pills .nav-link {
+  color: #000; /* Texto oscuro */
+  border-radius: 12px; /* Bordes redondeados como en la foto de diseño */
+}
+
+/* 2. Botón ACTIVO de la navegación */
+.glass-container .nav-pills .nav-link.active {
+  background-color: rgba(0, 0, 0, 0.2) !important; /* Vidrio oscuro (forzado) */
+  color: #000;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 3. Hover (pasar el mouse) por los botones de nav */
+.glass-container .nav-pills .nav-link:not(.active):hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Vidrio claro */
+}
+
+/* 4. Forzar transparencia en la TABLA */
+.glass-container .table {
+  background-color: transparent !important; /* Sin fondo opaco */
+}
+
+/* 5. Cabecera OSCURA de la tabla */
+.glass-container .table > thead.table-dark,
+.glass-container .table > .table-dark {
+  background-color: rgba(0, 0, 0, 0.3) !important; /* Vidrio oscuro (forzado) */
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+}
+
+/* 6. Filas "rayadas" (striped) de la tabla */
+.glass-container .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(0, 0, 0, 0.05) !important; /* Vidrio muy sutil (forzado) */
+  color: #000 !important;
+}
+/* 7. Filas "pares" (para que sean transparentes) */
+.glass-container .table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: transparent !important;
+  color: #000 !important;
+}
+
+/* 8. Botones de Acción (Editar/Eliminar) */
+.glass-container .btn-warning {
+  background-color: rgba(255, 193, 7, 0.6) !important; /* Amarillo translúcido */
+  border: none !important;
+  color: #000 !important;
+}
+
+.glass-container .btn-danger {
+  background-color: rgba(220, 53, 69, 0.6) !important; /* Rojo translúcido */
+  border: none !important;
+  color: #fff !important;
+}

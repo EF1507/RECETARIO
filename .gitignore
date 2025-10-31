@@ -1,0 +1,4 @@
+.venv/
+recetario-react/node_modules/
+recetario-api/.env
+recetario-react/.env
