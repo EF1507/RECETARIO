@@ -31,9 +31,9 @@ body {
   padding: 2rem;
   margin-top: 2rem;
 }
-/* --- NUEVO CSS para componentes internos --- */
+/* --- Componentes internos --- */
 
-/* 1. Hacemos que todo el texto dentro del panel sea oscuro (para leerse bien) */
+/* 1. Hacemos que todo el texto dentro del panel sea oscuro sino no se lee nada */
 .glass-container,
 .glass-container h1,
 .glass-container h2,
@@ -42,11 +42,11 @@ body {
   color: #000;
 }
 
-/* 2. Estilo "Glass" para los inputs del formulario */
+/* 2. Estilo "Glass" para formularios*/
 .glass-container .form-control {
-  background-color: rgba(255, 255, 255, 0.5); /* Blanco translúcido */
+  background-color: rgba(255, 255, 255, 0.5); 
   border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #000; /* Texto negro */
+  color: #000; 
 }
 
 /* 3. Color del texto placeholder */
@@ -56,47 +56,47 @@ body {
 
 /* 4. Estilo "Glass" para la tabla */
 .glass-container .table {
-  background-color: transparent; /* Quitamos el fondo opaco de la tabla */
-  color: #000; /* Texto negro */
+  background-color: transparent; 
+  color: #000; 
 }
 
-/* 5. Cabecero de la tabla (el que era .table-dark) */
+/* 5. Cabecero de la tabla */
 .glass-container .table-dark {
-  background-color: rgba(0, 0, 0, 0.3); /* Negro translúcido */
+  background-color: rgba(0, 0, 0, 0.3); 
   border-color: rgba(255, 255, 255, 0.3);
-  color: #fff; /* Texto blanco en el cabecero */
+  color: #fff;
 }
-
-/* 6. Filas "striped" (rayadas) de la tabla */
+/* 6. Filas "striped" (a rayas) de la tabla */
 .glass-container .table-striped > tbody > tr:nth-of-type(odd) > * {
   background-color: rgba(0, 0, 0, 0.05); /* Gris muy sutil y translúcido */
   color: #000;
-}/* --- CSS ADICIONAL para forzar el estilo "Glass" --- */
+}
 
-/* 1. Estilo para la Navegación (Mis Recetas, etc.) */
+
+/* Estilo para la Navegación (Mis Recetas, etc.) */
 .glass-container .nav-pills .nav-link {
   color: #000; /* Texto oscuro */
   border-radius: 12px; /* Bordes redondeados como en la foto de diseño */
 }
 
-/* 2. Botón ACTIVO de la navegación */
+/* Botón ACTIVO de la navegación */
 .glass-container .nav-pills .nav-link.active {
   background-color: rgba(0, 0, 0, 0.2) !important; /* Vidrio oscuro (forzado) */
   color: #000;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* 3. Hover (pasar el mouse) por los botones de nav */
+/* Hover (pasar el mouse) por los botones de nav */
 .glass-container .nav-pills .nav-link:not(.active):hover {
   background-color: rgba(255, 255, 255, 0.3); /* Vidrio claro */
 }
 
-/* 4. Forzar transparencia en la TABLA */
+/* Forzar transparencia en la TABLA */
 .glass-container .table {
   background-color: transparent !important; /* Sin fondo opaco */
 }
 
-/* 5. Cabecera OSCURA de la tabla */
+/* Cabecera OSCURA de la tabla */
 .glass-container .table > thead.table-dark,
 .glass-container .table > .table-dark {
   background-color: rgba(0, 0, 0, 0.3) !important; /* Vidrio oscuro (forzado) */
@@ -104,18 +104,18 @@ body {
   color: #fff !important;
 }
 
-/* 6. Filas "rayadas" (striped) de la tabla */
+/* Filas "rayadas" (striped) de la tabla */
 .glass-container .table-striped > tbody > tr:nth-of-type(odd) > * {
   background-color: rgba(0, 0, 0, 0.05) !important; /* Vidrio muy sutil (forzado) */
   color: #000 !important;
 }
-/* 7. Filas "pares" (para que sean transparentes) */
+/* Filas "pares" (para que sean transparentes) */
 .glass-container .table-striped > tbody > tr:nth-of-type(even) > * {
   background-color: transparent !important;
   color: #000 !important;
 }
 
-/* 8. Botones de Acción (Editar/Eliminar) */
+/* Botones de Acción (Editar/Eliminar) */
 .glass-container .btn-warning {
   background-color: rgba(255, 193, 7, 0.6) !important; /* Amarillo translúcido */
   border: none !important;

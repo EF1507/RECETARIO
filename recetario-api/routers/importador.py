@@ -40,8 +40,6 @@ async def importar_receta_desde_url(
     y devuelve los datos de la receta listos para el formulario.
     """
     
-    # --- ¡CAMBIO IMPORTANTE! ---
-    # Ahora verificamos 'recetasgratis.net'
     if "recetasgratis.net" not in request.url:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -71,7 +69,6 @@ async def guardar_receta_importada(
     Recibe los datos scrapeados, busca/crea los ingredientes
     y finalmente guarda la nueva receta en la base de datos.
     """
-    # --- ¡LÓGICA SIMPLIFICADA! ---
     service = RecetaService(db)
     receta_guardada = await service.save_imported_receta(
         receta_scrapeada=receta_scrapeada,

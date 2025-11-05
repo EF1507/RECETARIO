@@ -7,7 +7,7 @@ export default function Recetas() {
   const [recetas, setRecetas] = useState([]);
   const [editing, setEditing] = useState(null);
 
-  // ... (Toda tu lógica de load, handleCreate, etc. está perfecta)
+  // Cargar recetas
   async function load() {
     const r = await fetchRecetas();
     setRecetas(r);
@@ -30,11 +30,7 @@ export default function Recetas() {
 
   return (
     <div>
-      
-      {/* --- CORRECCIÓN: Barra de Navegación Eliminada ---
-        Aquí había un <ul className="nav nav-pills..."> que fue borrado
-        para evitar que se vea duplicada.
-      */}
+
       
       <h2 className="text-dark mt-4">Mis Recetas</h2>
       

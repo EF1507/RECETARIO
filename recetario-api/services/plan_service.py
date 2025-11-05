@@ -7,6 +7,7 @@ from sqlalchemy.orm import selectinload
 from datetime import date
 import models
 import schemas.plan_schema as plan_schema
+from dependencias import get_async_db
 
 async def generar_lista_de_compras(
     db: AsyncSession, 
@@ -16,20 +17,20 @@ async def generar_lista_de_compras(
 ):
     """
     Genera una lista de compras consolidada para un usuario y un rango de fechas.
-    Aquí es donde usamos Pandas.
+    El procesamiento lo hacemos con Pandas.
     """
 
     # 1. CONSULTA: Traemos todos los ingredientes de todas las recetas
     #    planificadas por el usuario en el rango de fechas.
     query = (
-        select(models.Ingrediente.nombre, models.RecetaIngrediente.cantidad, models.RecetaIngrediente.unidad)
-        .join(models.RecetaIngrediente, models.Ingrediente.id == models.RecetaIngrediente.ingrediente_id)
-        .join(models.Receta, models.Receta.id == models.RecetaIngrediente.receta_id)
-        .join(models.PlanSemanal, models.PlanSemanal.receta_id == models.Receta.id)
-        .where(
-            models.PlanSemanal.usuario_id == usuario_id,
-            models.PlanSemanal.fecha_plan.between(fecha_inicio, fecha_fin)
-        )
+    select(models.Ingrediente.nombre)
+    .join(models.RecetaIngrediente, models.Ingrediente.id == models.RecetaIngrediente.ingrediente_id)
+    .join(models.Receta, models.Receta.id == models.RecetaIngrediente.receta_id)
+    .join(models.PlanSemanal, models.PlanSemanal.receta_id == models.Receta.id)
+    .where(
+        models.PlanSemanal.usuario_id == usuario_id,
+        models.PlanSemanal.fecha_plan.between(fecha_inicio, fecha_fin)
+    )
     )
 
     result = await db.execute(query)
@@ -39,19 +40,18 @@ async def generar_lista_de_compras(
     if not ingredientes_db:
         return []
 
-    # 2. PROCESAMIENTO CON PANDAS:
-    #    Creamos un DataFrame de Pandas con los resultados - El dataframe es clave para el procesamiento
-    df = pd.DataFrame(ingredientes_db, columns=['ingrediente', 'cantidad', 'unidad'])
+    # 2. accion de PANDAS:
+    #    Creamos un DataFrame de Pandas con los resultados de la consulta
+    df = pd.DataFrame(ingredientes_db, columns=['ingrediente'])
 
-    #    Agrupo por 'ingrediente' y 'unidad', y sumamos las 'cantidad'
-    lista_agrupada = df.groupby(['ingrediente', 'unidad'])['cantidad'].sum().reset_index()
+    #    Agrupo por 'ingrediente' y elimino duplicados
+    df_unicos = df.drop_duplicates(subset=['ingrediente']).sort_values(by='ingrediente').reset_index(drop=True)
 
-    # Renombramos la columna para que coincida con el schema de respuesta
-    lista_agrupada.rename(columns={'cantidad': 'cantidad_total'}, inplace=True)
+    # === Solo dejamos la columna 'ingrediente'
+    df_limpio = df_unicos[['ingrediente']]
 
-    # 3. RESPUESTA: Convertimos el DataFrame resultante a un formato de diccionario
-    #    que coincida con nuestro schema 'ListaComprasItem'
-    return lista_agrupada.to_dict('records')
+    # === Convertimos a lista de diccionarios
+    return df_limpio.to_dict(orient='records')
 
 async def crear_plan_semanal(
     db: AsyncSession, 

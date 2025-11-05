@@ -29,7 +29,7 @@ def editar_receta(receta_id: int, receta: RecetaUpdate, db: Session = Depends(ge
     r = get_receta(db, receta_id)
     if not r:
         raise HTTPException(status_code=404, detail="Receta no encontrada")
-    # opcional: verificar que current_user.id == r.usuario_id si querés permisos por autor
+    
     r2 = update_receta(db, receta_id, receta)
     return r2
 
@@ -38,7 +38,6 @@ def eliminar_receta(receta_id: int, db: Session = Depends(get_db), current_user:
     r = get_receta(db, receta_id)
     if not r:
         raise HTTPException(status_code=404, detail="Receta no encontrada")
-    # opcional: verificar owner
     ok = delete_receta(db, receta_id)
     if not ok:
         raise HTTPException(status_code=500, detail="No se pudo eliminar")
@@ -50,7 +49,7 @@ def crear_receta(
     db: Session = Depends(get_db), 
     current_user: UsuarioSchema = Depends(get_current_user)
 ):
-    # 1. Creamos la receta (esto ya estaba bien)
+    # 1. Creamos la receta 
     nueva = Receta(
         titulo=data["titulo"],
         instrucciones=data["instrucciones"],
@@ -63,31 +62,20 @@ def crear_receta(
     db.commit()
     db.refresh(nueva)
 
-    # -----------------------------------------------------------------
-    # 🔹 (AQUÍ ESTÁ EL CÓDIGO CORREGIDO) 🔹
-    # -----------------------------------------------------------------
-    # Vincular ingredientes si vienen en el payload
+   # 2. Asociamos los ingredientes (si hay)
     if "ingredientes" in data and data["ingredientes"]:
         
-        # Iteramos sobre la lista de NÚMEROS (IDs) que nos enviaste.
-        # ej: [1, 2, 3]
         for ingrediente_id_num in data["ingredientes"]:
             
             # Solo por seguridad, chequeamos que sea un número
             if not isinstance(ingrediente_id_num, int):
-                continue # Si no es un int, lo ignoramos
+                continue
 
             # Creamos la relación Receta-Ingrediente
-            # Asumimos que el ID (ej: 1) ya existe en tu tabla 'ingredientes'
             ri = RecetaIngrediente(
                 receta_id=nueva.id,
                 ingrediente_id=ingrediente_id_num,
                 
-                # ------ ¡LA SOLUCIÓN! ------
-                # Ponemos valores por defecto para que la BD no falle
-                # (ya que tu columna 'cantidad' es 'nullable=False')
-                cantidad=1.0, 
-                unidad="N/A" # O "unidad", "s/d", etc.
             )
             db.add(ri)
             
